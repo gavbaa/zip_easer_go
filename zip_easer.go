@@ -1,4 +1,4 @@
-package main
+package zip_easer_go
 
 import (
 	"archive/zip"
