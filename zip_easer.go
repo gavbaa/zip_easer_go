@@ -51,6 +51,10 @@ func Unzip(r *zip.Reader, dest string) error {
 		if f.FileInfo().IsDir() {
 			os.MkdirAll(path, f.Mode())
 		} else {
+			// We have seen zips created with files in directories that were not previously specified in the zip file.
+			// Even by well known zip creating products.
+			os.MkdirAll(filepath.Dir(path), 0775)
+
 			f, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, f.Mode())
 			if err != nil {
 				return err
